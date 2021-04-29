@@ -53,6 +53,65 @@ import PatientsTable from "./OV/PatientsTable";
 
 //---------------
 
+
+/// Dentist Admin -------------------
+import DentistBookingTable from "./Dentist/BookingTable";
+import DentistDashboardPreview from "./Dentist/DashboardPreview";
+import DentistFindByRef from "./Dentist/FindByRef";
+import DentistCalendarView from "./Dentist/calendar-admin/CalendarView";
+//----------------------------
+
+export const MenuList_Dentist_Admin = [
+  { index: 0, id: `dashboard`, title: `Dashboard`, icon: <DashboardIcon /> },
+  {
+    index: 1,
+    id: `recentBookings`,
+    title: `Recent Bookings`,
+    icon: <AutorenewIcon />,
+  },
+  {
+    index: 2,
+    id: `todayBookings`,
+    title: `Today's Bookings`,
+    icon: <NewReleasesIcon />,
+  },
+  {
+    index: 3,
+    id: `oldBookings`,
+    title: `Old Bookings`,
+    icon: <HistoryIcon />,
+  },
+  {
+    index: 4,
+    id: `futureBookings`,
+    title: `Future Bookings`,
+    icon: <TimelineIcon />,
+  },
+  {
+    index: 5,
+    id: `allBookings`,
+    title: `All Bookings`,
+    icon: <DescriptionIcon />,
+  },
+  {
+    index: 6,
+    id: `deletedBookings`,
+    title: `Deleted Records`,
+    icon: <DeleteIcon />,
+  },
+  {
+    index: 7,
+    id: `calendarView`,
+    title: `Calendar View`,
+    icon: <DateRangeIcon />,
+  },
+  { index: 8, id: `findByRef`, title: `Find By Ref No`, icon: <SearchIcon /> },
+];
+
+
+
+
+
 export const MenuList_OV_Admin = [
   {
     index: 0,
@@ -384,25 +443,27 @@ export const MenuList_PCR = [
 ];
 
 export const getMenuContent = (role, index) => {
-   if (role === "ovadmin") {
+   if (role === "dentistadmin") {
     switch (index) {
       case 0:
-        return <OVBookingTable date="recent" />;
+        return <DentistDashboardPreview />;
+      case 1:
+        return <DentistBookingTable date="recent" />;
       case 2:
-        return <OVBookingTable date="today" />;
+        return <DentistBookingTable date="today" />;
       case 3:
-        return <OVBookingTable date="old" />;
+        return <DentistBookingTable date="old" />;
       case 4:
-        return <OVBookingTable date="future" />;
+        return <DentistBookingTable date="future" />;
       case 5:
-        return <OVBookingTable date="all" />;
+        return <DentistBookingTable date="all" />;
       case 6:
-        return <OVBookingTable date="deleted" />;
+        return <DentistBookingTable date="deleted" />;
       case 7:
-        return <OVCalendarView />;  
+        return <DentistCalendarView />;
       case 8:
-        return <PatientsTable />;  
-  
+        return <DentistFindByRef />;
+
       default:
         return `Page Not Found!`;
     }
@@ -413,8 +474,8 @@ export const getMenuContent = (role, index) => {
 
 export const getMenuRole = (role) => {
   switch (role) {
-    case "ovadmin":
-      return MenuList_OV_Admin;
+    case "dentistadmin":
+      return MenuList_Dentist_Admin;
     default:
       return [];
   }

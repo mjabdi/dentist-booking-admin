@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   adminPanelLabel: {
-    color: theme.palette.secondary.main, 
+    color: theme.palette.primary.main, 
     fontWeight: "600",
     marginBottom:"20px"
   }
@@ -237,7 +237,7 @@ export default function SignIn() {
               />
             </div> */}
 
-            <img src={logoImage} alt="Optimal Vision" style={{marginBottom:"20px"}}/>
+            <img src={'https://www.smileworksdental.co.uk/public/design/images/logo.webp'} alt="Dental Clinic Admin" style={{marginBottom:"20px"}}/>
 
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />

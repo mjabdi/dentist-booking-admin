@@ -188,13 +188,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   logoImage: {
-    width: "204px",
+    width: "175px",
     height: "45px",
     // marginLeft: "0px",
   },
 
   logoImageMenu: {
-    width: "136px",
+    width: "116px",
     height: "30px",
   },
 
@@ -515,7 +515,7 @@ export default function Dashboard() {
                     <React.Fragment>
                       <img
                         className={classes.logoImage}
-                        src={logoImage}
+                        src={'https://www.smileworksdental.co.uk/public/design/images/logo.webp'}
                         alt="logo image"
                       />
                     </React.Fragment> 
@@ -737,7 +737,7 @@ export default function Dashboard() {
                 <React.Fragment>
                   <img
                     className={classes.logoImageMenu}
-                    src={logoImage} 
+                    src={'https://www.smileworksdental.co.uk/public/design/images/logo.webp'} 
                     alt="logo image"
 
                   />
