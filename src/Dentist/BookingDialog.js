@@ -327,7 +327,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   backdrop: {
-    zIndex: theme.zIndex.drawer + 5,
+    zIndex: theme.zIndex.drawer + 999,
     color: "#fff",
   },
 
@@ -838,7 +838,7 @@ export default function BookingDialog(props) {
 
   const depositChanged = async (event) => {
     const checked = event.target.checked;
-    const deposit = checked ? 100 : 0;
+    const deposit = checked ? 95 : 0;
     setSaving(true);
     try {
       await BookService.changeDepositBooking(booking._id, deposit);
@@ -950,7 +950,7 @@ export default function BookingDialog(props) {
                   <IconButton
                     onClick={() => {
                       navigator.clipboard.writeText(
-                        `https://londonmedicalclinic.co.uk/medicalexpressclinic/user/edit/gynae/${booking._id}`
+                        `https://londonmedicalclinic.co.uk/drsia/user/edit/dentist/${booking._id}`
                       );
                       setCopied(true);
                       setTimeout(() => {
@@ -977,7 +977,7 @@ export default function BookingDialog(props) {
                 </span>
               </div>
 
-              <div
+              {/* <div
                 style={{
                   position: "absolute",
                   top: "25x",
@@ -989,7 +989,7 @@ export default function BookingDialog(props) {
                 }}
               >
                 GYNAE
-              </div>
+              </div> */}
 
               <Grid
                 container
@@ -1614,7 +1614,7 @@ export default function BookingDialog(props) {
                           )}
                       </li>
 
-                      <li hidden={booking.deleted || editMode.edit}>
+                      {/* <li hidden={booking.deleted || editMode.edit}>
                         <Button
                           disabled={!booking.formData}
                           startIcon={<PrintIcon />}
@@ -1629,9 +1629,9 @@ export default function BookingDialog(props) {
                         >
                           Download Registration Form
                         </Button>
-                      </li>
+                      </li> */}
 
-                      <li
+                      {/* <li
                         hidden={
                           booking.deleted || editMode.edit || booking.formData
                         }
@@ -1663,11 +1663,11 @@ export default function BookingDialog(props) {
                             </div>
                           )}
                         </Button>
-                      </li>
+                      </li> */}
 
                       <Divider />
 
-                      <li className={classes.li} style={{ marginTop: "20px" }}>
+                      {/* <li className={classes.li} style={{ marginTop: "20px" }}>
                         <span className={classes.infoTitle}>INVOICE # : </span>{" "}
                         <span style={{ paddingLeft: "0px" }}>
                           {!invoiceLoaded && (
@@ -1766,7 +1766,7 @@ export default function BookingDialog(props) {
                             </React.Fragment>
                           )}
                       </li>
-
+ */}
                       <li className={classes.li}>
                         <div
                           style={{
@@ -1840,11 +1840,11 @@ export default function BookingDialog(props) {
                                 label={
                                   booking.deposit > 0 ? (
                                     <span className={classes.PriceLabelPaid}>
-                                      £100 Deposit Paid
+                                      £95 Deposit Paid
                                     </span>
                                   ) : (
                                     <span className={classes.PriceLabelNotPaid}>
-                                      £100 Deposit Not Paid
+                                      £95 Deposit Not Paid
                                     </span>
                                   )
                                 }
@@ -1948,12 +1948,6 @@ export default function BookingDialog(props) {
                   </div>
                 </Grid>
               </div>
-              <Backdrop
-                className={classes.backdrop}
-                open={saving || deleting || restoring}
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
             </DialogContent>
 
             <PayDialog
@@ -2029,6 +2023,14 @@ export default function BookingDialog(props) {
               </Button>
             </DialogActions>
           </Dialog>
+
+              <Backdrop
+                className={classes.backdrop}
+                open={saving || deleting || restoring}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+
         </React.Fragment>
       )}
     </React.Fragment>

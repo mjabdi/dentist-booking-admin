@@ -8,6 +8,11 @@ import dateformat from 'dateformat';
 
 
 const rows = [
+    '07:30 AM',
+    '08:00 AM',
+    '08:30 AM',
+    '09:00 AM',
+    '09:30 AM',
     '10:00 AM',
     '10:30 AM', 
     '11:00 AM', 
@@ -24,6 +29,11 @@ const rows = [
     '04:30 PM',
     '05:00 PM',
     '05:30 PM',
+    '06:00 PM',
+    '06:30 PM',
+    '07:30 PM',
+    '08:00 PM',
+    '08:30 PM',
 ];
 
 const useStyles = makeStyles((theme) => ({

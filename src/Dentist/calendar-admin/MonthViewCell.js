@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
     Container: {
         width: "100%",
+        minWidth:"120px",
         paddingTop: "70%",
         position: "relative",
         backgroundColor: "#fff",
@@ -31,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
         top: "5px",
         right: "5px",
         color: "#555",
-        fontSize: "1rem"
+        fontSize: "1rem",
+        textAlign: "center",
+        minWidth: "35px",
+        textAlign:"center"
+
     },
 
     DayLabelToday: {
@@ -44,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "50%",
         padding: "5px",
         lineHight: "35px",
-        minWidth: "35px"
+        minWidth: "35px",
+        textAlign:"center"
     },
 
     DayLabelDisabled: {

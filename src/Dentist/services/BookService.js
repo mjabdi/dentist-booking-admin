@@ -29,7 +29,7 @@ export default class BookService {
 
    static getShouldRefundsCount = () =>
    {
-      return API.get(`/api/dentist/book/getshouldrefundscount?`);
+      return API.get(`/api/dentist/book/getshouldrefundscount`);
    }
 
    static manualRefundBooking = (bookingId) =>

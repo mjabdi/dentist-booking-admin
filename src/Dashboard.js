@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   logoImage: {
-    width: "175px",
+    width: "155px",
     height: "45px",
     // marginLeft: "0px",
   },

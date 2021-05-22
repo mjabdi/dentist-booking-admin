@@ -33,7 +33,7 @@ export default function BookingView() {
 
   const seeMoreRecords = (event) => {
     event.preventDefault();
-    setState(state=>({...state, currentMenuIndex:getMenuIndex('gynae',`recentBookings`)}));
+    setState(state=>({...state, currentMenuIndex:getMenuIndex('dentistadmin',`recentBookings`)}));
   }
 
   const loadData = () => 

@@ -19,7 +19,7 @@ import { getMenuRole, getMenuId } from "./MenuList";
 import { border, borderBottom } from "@material-ui/system";
 import { getGlobalPath } from "./GlobalPath";
 
-import GyaneBookService from "./Gynae/services/BookService"
+import DentistBookService from "./Dentist/services/BookService"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -78,7 +78,7 @@ export default function MyMenu() {
   const updateShouldRefundsCount = async () =>
   {
     try{
-      const res = await GyaneBookService.getShouldRefundsCount()
+      const res = await DentistBookService.getShouldRefundsCount()
       if (res && res.data && res.data.status === "OK")
       {
         setState(state => ({...state, shouldRefunsCount: res.data.count}))
@@ -93,7 +93,7 @@ export default function MyMenu() {
   useEffect(() => {
     setSelectedIndex(state.currentMenuIndex);
     updateShouldRefundsCount()
-  }, [state.currentMenuIndex]);
+  }, [state.currentMenuIndex, state.bookingDialogDataChanged]);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -140,7 +140,7 @@ export default function MyMenu() {
                         >{`${item.title}`}</span>{" "}
                       </Grid>
 
-                      {state.role === "gynae" && item.id === "deletedBookings" && state.shouldRefunsCount > 0 && (
+                      {state.role === "dentistadmin" && item.id === "deletedBookings" && state.shouldRefunsCount > 0 && (
                         <span className={classes.Badge}> {state.shouldRefunsCount} </span>
                       )}
 

@@ -6,8 +6,8 @@ export const authToken = 'Basic QXp1cmXEaWFtb45kOmh1bnRlcjO='
 export const backendAPI = 'http://localhost:9090/'
 
 export function getGlobalPath(path){
-    // return '/optimalvision/admin' + path
-    return path
+    return '/drsia/admin' + path
+    // return path
 }
 
 export function getMenuIdFromGlobalPath(globalPath){

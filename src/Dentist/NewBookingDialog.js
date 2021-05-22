@@ -208,16 +208,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Packages = [
-  { packageName: "Consultation with Consultant Gynaecologist" },
-  { packageName: `Coil Fitting/Coil Removal` },
-  { packageName: `Well Woman Check` },
-  { packageName: `Sexual Health Screening` },
-  { packageName: `Pre-pregnancy/Fertility check` },
-  { packageName: `Gynaecological Ultrasound` },
-  { packageName: `HPV Vaccination` },
-  { packageName: `Cervical / Pap Smear` },
-  { packageName: `HPV Treatment / Wart Cryo-Therapy` },
-];
+  {packageName: 'Enlighten home teeth whitening - £395'},
+  {packageName: `Enlighten home and in office teeth whitening - £495`},
+  {packageName: `Invisalign consultation`},
+]
 
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -377,7 +371,7 @@ export default function NewBookingDialog(props) {
         email: email,
         service: service,
         notes: notes,
-        deposit: deposit ? 100 : 0,
+        deposit: deposit ? 95 : 0,
       });
       setSaving(false);
       setState((state) => ({
@@ -430,9 +424,9 @@ export default function NewBookingDialog(props) {
                 </Grid>
               </Grid>
 
-              <div style={{position:"absolute", top: "5px", right: "5px", backgroundColor:CalendarColors.GYNAE_COLOR, color:"#fff", padding: "0px 5px", borderRadius:"10px", fontSize:"1rem"}}>
+              {/* <div style={{position:"absolute", top: "5px", right: "5px", backgroundColor:CalendarColors.GYNAE_COLOR, color:"#fff", padding: "0px 5px", borderRadius:"10px", fontSize:"1rem"}}>
                     GYNAE
-              </div>
+              </div> */}
 
               <Divider />
             </DialogTitle>
@@ -548,7 +542,7 @@ export default function NewBookingDialog(props) {
                           name="deposit"
                         />
                       }
-                      label={deposit ? <span className={classes.PriceLabelPaid}>£100 Deposit Paid</span> : <span className={classes.PriceLabelNotPaid}>£100 Deposit Not Paid</span>}
+                      label={deposit ? <span className={classes.PriceLabelPaid}>£95 Deposit Paid</span> : <span className={classes.PriceLabelNotPaid}>£95 Deposit Not Paid</span>}
                     />
                   </Grid>
                 </Grid>
