@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import BookService from './services/BookService';
 import { Button, Checkbox, CircularProgress, Dialog, DialogContent, DialogTitle, Divider, FormControl, FormControlLabel, Grid, Icon, InputLabel, LinearProgress, Link, makeStyles, MenuItem, Paper, Select, SvgIcon, Switch, TextField, Tooltip } from '@material-ui/core';
@@ -8,7 +8,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import GlobalState from './../GlobalState';
 import { getMenuIndex } from './../MenuList';
-import {FormatDateFromString, FormatDateFromStringShortYear} from './DateFormatter';
+import { FormatDateFromString, FormatDateFromStringShortYear } from './DateFormatter';
 
 import SearchIcon from '@material-ui/icons/Search';
 import BookingDialog from './BookingDialog';
@@ -45,22 +45,24 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import PriceCalculator from './PriceCalculator';
 import { corporates } from './Corporates';
 
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+
 const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(1),
 
   },
-  
-  refreshButton:{
+
+  refreshButton: {
     marginLeft: theme.spacing(2),
   },
 
-  checkIcon:{
+  checkIcon: {
     color: "green"
   },
 
-  closeIcon:{
+  closeIcon: {
     color: "red"
   },
 
@@ -68,42 +70,42 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer"
   },
 
-  BookedLabel:{
+  BookedLabel: {
     backgroundColor: "#606060",
     color: "#fff",
     width: "70px",
     textAlign: "center",
   },
 
-  PatientAttendedLabel:{
+  PatientAttendedLabel: {
     backgroundColor: "#0066aa",
     color: "#fff",
     width: "70px",
     textAlign: "center",
   },
 
-  SampleTakenLabel:{
+  SampleTakenLabel: {
     backgroundColor: "#0066cc",
     color: "#fff",
     width: "70px",
     textAlign: "center",
   },
 
-  ReportSentLabel:{
+  ReportSentLabel: {
     backgroundColor: "#009900",
     color: "#fff",
     width: "70px",
     textAlign: "center",
   },
 
-  ReportCertSentLabel:{
+  ReportCertSentLabel: {
     backgroundColor: "#009900",
     color: "#fff",
     width: "70px",
     textAlign: "center",
   },
 
-  PositiveLabel:{
+  PositiveLabel: {
     backgroundColor: "red",
     color: "#fff",
     width: "70px",
@@ -116,8 +118,8 @@ const useStyles = makeStyles((theme) => ({
     left: "40%",
     width: "600px",
     height: "300px",
-    backgroundColor : "#fafafa",
-    color : "#111",
+    backgroundColor: "#fafafa",
+    color: "#111",
     zIndex: "1000",
     display: "flex",
     alignItems: "center",
@@ -127,38 +129,38 @@ const useStyles = makeStyles((theme) => ({
   ExportToExcelButton:
   {
     // marginBottom : "20px",
-    color : "#2f942e",
+    color: "#2f942e",
     borderColor: "#2f942e",
     "&:hover": {
       background: "#fafffa",
       borderColor: "#2f942e",
     },
-    textDecoration : "none !important", 
-   
+    textDecoration: "none !important",
+
   },
 
   ExportToExcelButtonInline:
   {
     // marginBottom : "20px",
-    color : "#2f942e",
+    color: "#2f942e",
     borderColor: "#2f942e",
     "&:hover": {
       background: "#fafffa",
       borderColor: "#2f942e",
     },
-    textDecoration : "none !important", 
+    textDecoration: "none !important",
     cursor: "pointer",
     padding: "10px"
-   
+
   },
 
   table: {
     width: "100%",
     border: "1px solid #ddd",
     borderCollapse: "collapse",
-},
+  },
 
-th: {
+  th: {
     border: "1px solid #ddd",
     borderCollapse: "collapse",
     verticalAlign: "middle",
@@ -169,102 +171,82 @@ th: {
     paddingBottom: "5px",
     width: "14%",
     paddingLeft: "5px",
-},
+  },
 
-td: {
+  td: {
     border: "1px solid #ddd",
     borderCollapse: "collapse",
     verticalAlign: "middle",
     paddingLeft: "5px",
-},
+  },
 
-topSelect: {
-  margin: theme.spacing(1),
-  minWidth: 80,
-},
+  topSelect: {
+    margin: theme.spacing(1),
+    minWidth: 80,
+  },
 
-notifyIcon:{
-  width: "16px",
-  height: "16px",
-  borderRadius: "50%",
-  backgroundColor : "rgb(220, 0, 78)",
-  marginLeft: "10px"
-}
+  notifyIcon: {
+    width: "16px",
+    height: "16px",
+    borderRadius: "50%",
+    backgroundColor: "rgb(220, 0, 78)",
+    marginLeft: "10px"
+  }
 
 }));
 
-const getTableTitle = (str) =>{
+const getTableTitle = (str) => {
 
-  if (str === 'today')
-  {
+  if (str === 'today') {
     return `Today's Bookings`;
-  }else if (str === 'old')
-  {
+  } else if (str === 'old') {
     return `Old Bookings`;
-  }else if (str === 'future')
-  {
+  } else if (str === 'future') {
     return `Future Bookings`;
-  }else if (str === 'recent')
-  {
+  } else if (str === 'recent') {
     return `Recent Bookings`;
-  }else if (str === 'live')
-  {
+  } else if (str === 'live') {
     return `Live Bookings`;
-  }else if (str === 'completed')
-  {
+  } else if (str === 'completed') {
     return `Completed Bookings`;
-  }else if (str === 'positive')
-  {
+  } else if (str === 'positive') {
     return `Positive Results`;
-  }else if (str === 'deleted')
-  {
+  } else if (str === 'deleted') {
     return `Deleted Records`;
-  }else if (str === 'late')
-  {
+  } else if (str === 'late') {
     return `40 Hours Late`;
   }
-  
-  else
-  {
+
+  else {
     return `All Bookings`;
   }
 
 }
 
-const getTableIcon = (str) =>{
+const getTableIcon = (str) => {
 
-  if (str === 'today')
-  {
-    return <NewReleasesIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'old')
-  {
-    return <HistoryIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'future')
-  {
-    return <TimelineIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'recent')
-  {
-    return <AutorenewIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'live')
-  {
-    return <LiveTvIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'completed')
-  {
-    return  <PlaylistAddCheckIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'positive')
-  {
-    return <AddCircleOutlineIcon style={{fontSize:"2.2rem"}} />
-  }else if (str === 'deleted')
-  {
-    return <DeleteIcon style={{fontSize:"2.2rem"}} />;
-  }else if (str === 'late')
-  {
-    return <HourglassEmptyIcon style={{fontSize:"2.2rem"}} />;
+  if (str === 'today') {
+    return <NewReleasesIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'old') {
+    return <HistoryIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'future') {
+    return <TimelineIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'recent') {
+    return <AutorenewIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'live') {
+    return <LiveTvIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'completed') {
+    return <PlaylistAddCheckIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'positive') {
+    return <AddCircleOutlineIcon style={{ fontSize: "2.2rem" }} />
+  } else if (str === 'deleted') {
+    return <DeleteIcon style={{ fontSize: "2.2rem" }} />;
+  } else if (str === 'late') {
+    return <HourglassEmptyIcon style={{ fontSize: "2.2rem" }} />;
   }
-  
-  else
-  {
-    return <DescriptionIcon style={{fontSize:"2.2rem"}} />;
+
+  else {
+    return <DescriptionIcon style={{ fontSize: "2.2rem" }} />;
   }
 
 }
@@ -278,107 +260,94 @@ function PaperComponent(props) {
 }
 
 export default function BookingTable(props) {
-  
+
   const classes = useStyles();
 
   const [topCount, setTopCount] = React.useState(25)
-  const topCountChanged = (event) =>
-  {
+  const topCountChanged = (event) => {
     setTopCount(event.target.value)
     loadData(event.target.value)
   }
-  
+
 
   const [openDialogExcel, setOpenDialogExcel] = useState(false);
-  const handleCloseDialogExcel = () =>
-  {
+  const handleCloseDialogExcel = () => {
     setCorporate(corporates[0]);
     setJustCorporate(false);
     setOpenDialogExcel(false);
   }
 
 
-  const [fromDate, setFromDate] = React.useState(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ));
+  const [fromDate, setFromDate] = React.useState(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000));
   const handleFromDateChange = (date) => {
     setFromDate(date);
-    setFromDateStr(dateformat(date,'yyyy-mm-dd'));
+    setFromDateStr(dateformat(date, 'yyyy-mm-dd'));
   };
 
-  const [untilDate, setUntilDate] = React.useState(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000 ));
+  const [untilDate, setUntilDate] = React.useState(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000));
   const handleUntilDateChange = (date) => {
     setUntilDate(date);
-    seUntilDateStr(dateformat(date,'yyyy-mm-dd'));
+    seUntilDateStr(dateformat(date, 'yyyy-mm-dd'));
   };
 
-  const [fromDateStr, setFromDateStr] = useState(dateformat(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ), 'yyyy-mm-dd'));
-  const [untilDateStr, seUntilDateStr] = useState(dateformat(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000 ), 'yyyy-mm-dd'));
+  const [fromDateStr, setFromDateStr] = useState(dateformat(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000), 'yyyy-mm-dd'));
+  const [untilDateStr, seUntilDateStr] = useState(dateformat(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000), 'yyyy-mm-dd'));
 
   const [justCorporate, setJustCorporate] = useState(false);
 
-  const[chkDate, setChkDate] = useState(true);
-  const[chkForename, setChkForename] = useState(true);
-  const[chkSurname, setChkSurname] = useState(true);
-  const[chkDOB, setChkDOB] = useState(true);
-  const[chkEmail, setChkEmail] = useState(true);
-  const[chkTel, setChkTel] = useState(true);
-  const[chkCertificate, setChkCertidicate] = useState(true);
-  const[chkAntiBodyTest, setChkAntiBodyTest] = useState(true);
-  const[chkextRef, setChkExtRef] = useState(true);
-  const[chkPrice, setChkPrice] = useState(true);
+  const [chkDate, setChkDate] = useState(true);
+  const [chkForename, setChkForename] = useState(true);
+  const [chkSurname, setChkSurname] = useState(true);
+  const [chkDOB, setChkDOB] = useState(true);
+  const [chkEmail, setChkEmail] = useState(true);
+  const [chkTel, setChkTel] = useState(true);
+  const [chkCertificate, setChkCertidicate] = useState(true);
+  const [chkAntiBodyTest, setChkAntiBodyTest] = useState(true);
+  const [chkextRef, setChkExtRef] = useState(true);
+  const [chkPrice, setChkPrice] = useState(true);
 
-  const justCorporateChanged = (event) =>
-  {
+  const justCorporateChanged = (event) => {
     setJustCorporate(event.target.checked);
   }
-  
 
-  const chkDateChanged = (event) =>
-  {
+
+  const chkDateChanged = (event) => {
     setChkDate(event.target.checked);
   }
 
-  const chkForenameChanged = (event) =>
-  {
+  const chkForenameChanged = (event) => {
     setChkForename(event.target.checked);
   }
 
-  const chkSurnameChanged = (event) =>
-  {
+  const chkSurnameChanged = (event) => {
     setChkSurname(event.target.checked);
   }
 
-  const chkDOBChanged = (event) =>
-  {
+  const chkDOBChanged = (event) => {
     setChkDOB(event.target.checked);
   }
 
-  const chkEmailChanged = (event) =>
-  {
+  const chkEmailChanged = (event) => {
     setChkEmail(event.target.checked);
   }
 
-  const chkTelChanged = (event) =>
-  {
+  const chkTelChanged = (event) => {
     setChkTel(event.target.checked);
   }
 
-  const chkCertificateChanged = (event) =>
-  {
+  const chkCertificateChanged = (event) => {
     setChkCertidicate(event.target.checked);
   }
 
-  const chkAntiBodyTestChanged = (event) =>
-  {
+  const chkAntiBodyTestChanged = (event) => {
     setChkAntiBodyTest(event.target.checked);
   }
 
-  const chkextRefChanged = (event) =>
-  {
+  const chkextRefChanged = (event) => {
     setChkExtRef(event.target.checked);
   }
 
-  const chkPriceChanged = (event) =>
-  {
+  const chkPriceChanged = (event) => {
     setChkPrice(event.target.checked);
   }
 
@@ -386,104 +355,116 @@ export default function BookingTable(props) {
 
   var columns = [];
 
-  if (props.date === 'recent')
-  {
+  if (props.date === 'recent') {
     columns = [
       // { field: 'id', headerName: '#', width: 70 },
-  
-      {field: '_id', headerName:' ', width: 70, renderCell: (params) =>{
+
+      {
+        field: '_id', headerName: ' ', width: 100, renderCell: (params) => {
           return (
 
-           <React.Fragment>
+            <React.Fragment>
 
-                <Button 
-                        color="primary"
-                        onClick = {event => openDetailsDialog(event, params.value)}
-                > 
-            
-            <SearchIcon/> 
-            
-            </Button>
+              <Grid container direction="row">
+                <Grid item>
+                  <div style={{ width: "15px", paddingTop: "6px" }}>
+                    {params.getValue("deposit") > 0 && (
+                      <Tooltip title="Deposit Paid">
+                        <AttachMoneyIcon style={{ color: "#007d00", fontSize: "1.3rem", fontWeight: "500" }} />
+                      </Tooltip>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color="primary"
+                    onClick={event => openDetailsDialog(event, params.value)}
+                  >
+                    <SearchIcon />
+                  </IconButton>
 
-           </React.Fragment>
+                </Grid>
+              </Grid>
 
-          
-  
-          ); 
-      
+
+            </React.Fragment>
+
+
+
+          );
+
         }
       },
 
-      { field: 'paid', headerName: 'Paid', align: 'center' , width: 90, renderCell: (params) => { 
-        if (!params.value)
-        {
-           return ( 
-              <React.Fragment>                    
-                    <CloseIcon className={classes.closeIcon}/>                        
+      {
+        field: 'paid', headerName: 'Paid', align: 'center', width: 90, renderCell: (params) => {
+          if (!params.value) {
+            return (
+              <React.Fragment>
+                <CloseIcon className={classes.closeIcon} />
               </React.Fragment>
-           );
-        }
-        else
-        {
-           if (params.getValue('paidBy') === 'credit card')
-           {
-             return ( <CreditCardIcon className={classes.checkIcon}/> );
-           }
-           else if (params.getValue('paidBy') === 'cash')
-           {
-             return ( <LocalAtmIcon className={classes.checkIcon}/> );
-           }
-           else if (params.getValue('paidBy') === 'corporate')
-           {
-             return ( <BusinessIcon className={classes.checkIcon}/> );
-           }
-           else
-           {
-             return '';  
-           }
-        }
-  }
- },
-
-
-      { field: 'timeStamp', headerName: 'TimeStamp', width: 200, valueFormatter: (params) => { 
-        return formatTimeStamp(params.value);
+            );
+          }
+          else {
+            if (params.getValue('paidBy') === 'credit card') {
+              return (<CreditCardIcon className={classes.checkIcon} />);
+            }
+            else if (params.getValue('paidBy') === 'cash') {
+              return (<LocalAtmIcon className={classes.checkIcon} />);
+            }
+            else if (params.getValue('paidBy') === 'corporate') {
+              return (<BusinessIcon className={classes.checkIcon} />);
+            }
+            else {
+              return '';
+            }
+          }
         }
       },
-  
-      { field: 'bookingDate', headerName: 'B Date', width: 110, valueFormatter: (params) => { 
-              return FormatDateFromString(params.value);
-          }
-       },
-      { field: 'bookingTimeNormalized', headerName: 'B Time', width: 105 , valueGetter: (params) => {
-        return params.getValue('bookingTime');
-      }},
-      { field: 'status', headerName: 'Status', width: 100, renderCell: (params) =>{
-          if (params.value === 'booked')
-          {
+
+
+      {
+        field: 'timeStamp', headerName: 'TimeStamp', width: 200, valueFormatter: (params) => {
+          return formatTimeStamp(params.value);
+        }
+      },
+
+      {
+        field: 'bookingDate', headerName: 'B Date', width: 110, valueFormatter: (params) => {
+          return FormatDateFromString(params.value);
+        }
+      },
+      {
+        field: 'bookingTimeNormalized', headerName: 'B Time', width: 105, valueGetter: (params) => {
+          return params.getValue('bookingTime');
+        }
+      },
+      {
+        field: 'status', headerName: 'Status', width: 100, renderCell: (params) => {
+          if (params.value === 'booked') {
             return (
               <span className={classes.BookedLabel}>  BM </span>
             );
-        
-          }else if (params.value === 'patient_attended')
-          {
+
+          } else if (params.value === 'patient_attended') {
             return (
-              <span  className={classes.PatientAttendedLabel}> PA </span>
+              <span className={classes.PatientAttendedLabel}> PA </span>
             );
           }
-          else{
+          else {
             return 'Unknown';
           }
         }
       },
-      { field: 'bookingRef', headerName: 'Ref No.', width: 120 , renderCell: (params) =>{
-        return (
-          <Tooltip title="Go Find By Ref" placement="right">
+      {
+        field: 'bookingRef', headerName: 'Ref No.', width: 120, renderCell: (params) => {
+          return (
+            <Tooltip title="Go Find By Ref" placement="right">
               <Link className={classes.RefLink}
               //  onClick={
               //   () => {
               //     console.log(params.value);
-  
+
               //     setState(state => ({...state, currentMenuIndex: getMenuIndex(`pcr` , `findByRef`)}));
               //     setState(state => ({...state, ref : params.value}));
               //     setState(state => ({...state, refError : false})); 
@@ -491,152 +472,168 @@ export default function BookingTable(props) {
               //     setState(state => ({...state, findRecords : !state.findRecords}));
               //   }
               // }
-              
+
               >
                 {params.value}
               </Link>
-          </Tooltip>
-  
-        );
-      }},
+            </Tooltip>
+
+          );
+        }
+      },
       { field: 'fullname', headerName: 'Fullname', width: 250 },
       { field: 'email', headerName: 'Email', width: 200 },
       { field: 'phone', headerName: 'Tel', width: 150 },
       { field: 'service', headerName: 'Service', width: 250 },
       { field: 'notes', headerName: 'Notes', width: 500 },
-    
+
     ];
 
   }
-  else
-  {
+  else {
     columns = [
       // { field: 'id', headerName: '#', width: 70 },
-  
-      {field: '_id', headerName:' ', width: 70, renderCell: (params) =>{
+
+      {
+        field: '_id', headerName: ' ', width: 100, renderCell: (params) => {
           return (
+
             <React.Fragment>
 
-                <Button 
-                        color="primary"
-                        onClick = {event => openDetailsDialog(event, params.value)}
-                > 
-            
-            <SearchIcon/> 
-            
-            </Button>
+              <Grid container direction="row">
+                <Grid item>
+                  <div style={{ width: "15px", paddingTop: "6px" }}>
+                    {params.getValue("deposit") > 0 && (
+                      <Tooltip title="Deposit Paid">
+                        <AttachMoneyIcon style={{ color: "#007d00", fontSize: "1.3rem", fontWeight: "500" }} />
+                      </Tooltip>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color="primary"
+                    onClick={event => openDetailsDialog(event, params.value)}
+                  >
+                    <SearchIcon />
+                  </IconButton>
 
-           </React.Fragment>
-  
-          ); 
-      
+                </Grid>
+              </Grid>
+
+
+            </React.Fragment>
+
+
+
+          );
+
         }
       },
 
-      { field: 'paid', headerName: 'Paid', align: 'center' , width: 90, renderCell: (params) => { 
-               if (!params.value)
-               {
-                  return ( 
-                    <React.Fragment>
-                                <CloseIcon className={classes.closeIcon}/> 
-                                {parseInt(params.getValue('deposit')) > 0 && props.date === 'deleted' && (
-                                      <span className={classes.notifyIcon}>&nbsp;</span>
-                                )}
+      {
+        field: 'paid', headerName: 'Paid', align: 'center', width: 90, renderCell: (params) => {
+          if (!params.value) {
+            return (
+              <React.Fragment>
+                <CloseIcon className={classes.closeIcon} />
+                {parseInt(params.getValue('deposit')) > 0 && props.date === 'deleted' && (
+                  <span className={classes.notifyIcon}>&nbsp;</span>
+                )}
 
-                               
-                    </React.Fragment>
-                     
-                        
-                  
-                  
-                  );
-               }
-               else
-               {
-                  if (params.getValue('paidBy') === 'credit card')
-                  {
-                    return ( <CreditCardIcon className={classes.checkIcon}/> );
-                  }
-                  else if (params.getValue('paidBy') === 'cash')
-                  {
-                    return ( <LocalAtmIcon className={classes.checkIcon}/> );
-                  }
-                  else if (params.getValue('paidBy') === 'corporate')
-                  {
-                    return ( <BusinessIcon className={classes.checkIcon}/> );
-                  }
-                  else
-                  {
-                    return '';  
-                  }
-               }
-         }
-        },
-        { field: 'bookingDate', headerName: 'B Date', width: 110, valueFormatter: (params) => { 
+
+              </React.Fragment>
+
+
+
+
+            );
+          }
+          else {
+            if (params.getValue('paidBy') === 'credit card') {
+              return (<CreditCardIcon className={classes.checkIcon} />);
+            }
+            else if (params.getValue('paidBy') === 'cash') {
+              return (<LocalAtmIcon className={classes.checkIcon} />);
+            }
+            else if (params.getValue('paidBy') === 'corporate') {
+              return (<BusinessIcon className={classes.checkIcon} />);
+            }
+            else {
+              return '';
+            }
+          }
+        }
+      },
+      {
+        field: 'bookingDate', headerName: 'B Date', width: 110, valueFormatter: (params) => {
           return FormatDateFromString(params.value);
-      }
-   },
-  { field: 'bookingTimeNormalized', headerName: 'B Time', width: 105 , valueGetter: (params) => {
-    return params.getValue('bookingTime');
-  }},
-  { field: 'status', headerName: 'Status', width: 100, renderCell: (params) =>{
-      if (params.value === 'booked')
+        }
+      },
       {
-        return (
-          <span className={classes.BookedLabel}>  BM </span>
-        );
-    
-      }else if (params.value === 'patient_attended')
+        field: 'bookingTimeNormalized', headerName: 'B Time', width: 105, valueGetter: (params) => {
+          return params.getValue('bookingTime');
+        }
+      },
       {
-        return (
-          <span  className={classes.PatientAttendedLabel}> PA </span>
-        );
-      }
-      else{
-        return 'Unknown';
-      }
-    }
-  },
-  { field: 'bookingRef', headerName: 'Ref No.', width: 120 , renderCell: (params) =>{
-    return (
-      <Tooltip title="Go Find By Ref" placement="right">
-          <Link className={classes.RefLink}
-          //  onClick={
-          //   () => {
-          //     console.log(params.value);
+        field: 'status', headerName: 'Status', width: 100, renderCell: (params) => {
+          if (params.value === 'booked') {
+            return (
+              <span className={classes.BookedLabel}>  BM </span>
+            );
 
-          //     setState(state => ({...state, currentMenuIndex: getMenuIndex(`pcr` , `findByRef`)}));
-          //     setState(state => ({...state, ref : params.value}));
-          //     setState(state => ({...state, refError : false})); 
-          //     setState(state => ({...state, foundRecords : []}));
-          //     setState(state => ({...state, findRecords : !state.findRecords}));
-          //   }
-          // }
-          
-          >
-            {params.value}
-          </Link>
-      </Tooltip>
+          } else if (params.value === 'patient_attended') {
+            return (
+              <span className={classes.PatientAttendedLabel}> PA </span>
+            );
+          }
+          else {
+            return 'Unknown';
+          }
+        }
+      },
+      {
+        field: 'bookingRef', headerName: 'Ref No.', width: 120, renderCell: (params) => {
+          return (
+            <Tooltip title="Go Find By Ref" placement="right">
+              <Link className={classes.RefLink}
+              //  onClick={
+              //   () => {
+              //     console.log(params.value);
 
-    );
-  }},
-  { field: 'fullname', headerName: 'Fullname', width: 250 },
-  { field: 'email', headerName: 'Email', width: 200 },
-  { field: 'phone', headerName: 'Tel', width: 150 },
-  { field: 'service', headerName: 'Service', width: 250 },
-  { field: 'notes', headerName: 'Notes', width: 500 },
+              //     setState(state => ({...state, currentMenuIndex: getMenuIndex(`pcr` , `findByRef`)}));
+              //     setState(state => ({...state, ref : params.value}));
+              //     setState(state => ({...state, refError : false})); 
+              //     setState(state => ({...state, foundRecords : []}));
+              //     setState(state => ({...state, findRecords : !state.findRecords}));
+              //   }
+              // }
 
-    
+              >
+                {params.value}
+              </Link>
+            </Tooltip>
+
+          );
+        }
+      },
+      { field: 'fullname', headerName: 'Fullname', width: 250 },
+      { field: 'email', headerName: 'Email', width: 200 },
+      { field: 'phone', headerName: 'Tel', width: 150 },
+      { field: 'service', headerName: 'Service', width: 250 },
+      { field: 'notes', headerName: 'Notes', width: 500 },
+
+
     ];
-  
+
 
   }
 
 
 
-  const [state, setState] = React.useContext(GlobalState);  
+  const [state, setState] = React.useContext(GlobalState);
 
-  const [data, setData] = React.useState({bookings: [] , cachedBookings: [], isFetching : true});
+  const [data, setData] = React.useState({ bookings: [], cachedBookings: [], isFetching: true });
 
   const [selectedRow, setSelectedRow] = React.useState(null);
 
@@ -644,63 +641,52 @@ export default function BookingTable(props) {
   const [seeDetailsDialogOpen, setSeeDetailsDialogOpen] = React.useState(false);
 
   const [corporate, setCorporate] = useState(corporates[0]);
-  const corporateChanged = (event) =>
-  {
+  const corporateChanged = (event) => {
     setCorporate(event.target.value);
   }
-  
 
-  const [filter,setFilter] = React.useState('');
+
+  const [filter, setFilter] = React.useState('');
 
 
   const lastPromise = useRef();
 
-  const formatTimeStamp = (timeStamp) =>
-  {
+  const formatTimeStamp = (timeStamp) => {
     const todayStr = dateformat(new Date(), 'yyyy-mm-dd');
     const timeStampStr = dateformat(timeStamp, 'yyyy-mm-dd');
-    if (todayStr === timeStampStr)
-    {
+    if (todayStr === timeStampStr) {
       return dateformat(timeStamp, "'Today', h:MM:ss TT");
     }
-    else
-    {
-       return dateformat(timeStamp, "mmm dS, h:MM:ss TT");
+    else {
+      return dateformat(timeStamp, "mmm dS, h:MM:ss TT");
     }
   }
 
-  const loadData = (top) =>
-  {
+  const loadData = (top) => {
     var api = BookService.getAllBookings;
-    if (props.date === 'today')
-    {
+    if (props.date === 'today') {
       api = BookService.getTodayBookings;
-    }else if (props.date === 'old')
-    {
+    } else if (props.date === 'old') {
       api = BookService.getOldBookings;
-    }else if (props.date === 'future')
-    {
+    } else if (props.date === 'future') {
       api = BookService.getFutureBookings;
-    }else if (props.date === 'recent')
-    {
+    } else if (props.date === 'recent') {
       api = BookService.getRecentBookingsAll;
     }
-    else if (props.date === 'deleted')
-    {
+    else if (props.date === 'deleted') {
       api = BookService.getDeletedBookings;
     }
-     
-    setData({bookings: [], cachedBookings: [], isFetching: true});
-   
+
+    setData({ bookings: [], cachedBookings: [], isFetching: true });
+
     // console.log(props)
 
-    const currentPromise = api(top).then( (res) =>{
+    const currentPromise = api(top).then((res) => {
       // console.log(res)
-      for (var i=0; i < res.data.length; i++)
-      {
-        res.data[i] = {...res.data[i], id : i + 1}
-      }  
-      setData({bookings: [...res.data], cachedBookings: [...res.data], isFetching: false});
+      for (var i = 0; i < res.data.length; i++) {
+        res.data[i] = { ...res.data[i], id: i + 1 }
+      }
+      setData({ bookings: [...res.data], cachedBookings: [...res.data], isFetching: false });
       // return res.data;
     }).catch(err => {
       console.error(err)
@@ -724,84 +710,77 @@ export default function BookingTable(props) {
 
   }
 
-  useEffect( () => {
-            setTopCount(25)
-            loadData(25)
-        },
-        [props.date]);
+  useEffect(() => {
+    setTopCount(25)
+    loadData(25)
+  },
+    [props.date]);
 
 
 
 
-  useEffect( () => {
+  useEffect(() => {
 
-        if (filter && filter.trim().length > 0)
-        {
-          var filteredData = data.cachedBookings.filter( (element) => 
+    if (filter && filter.trim().length > 0) {
+      var filteredData = data.cachedBookings.filter((element) =>
 
-             (element.fullname.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
-             || (element.service.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
-               
-              
-          );
-  
-  
-          setData({bookings: [...filteredData], cachedBookings: data.cachedBookings, isFetching: false});
-        }else
-        {
-          setData({bookings: [...data.cachedBookings], cachedBookings: data.cachedBookings, isFetching: false});
-        }
-      },
-      [filter]);
-
-  
-      useEffect(() => {
-
-       loadData(topCount)
-    
-      }, [state.bookingDialogDataChanged]);    
+        (element.fullname.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
+        || (element.service.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
 
 
-  const handleCloseSeeDetaisDialog = () =>
-  {
+      );
+
+
+      setData({ bookings: [...filteredData], cachedBookings: data.cachedBookings, isFetching: false });
+    } else {
+      setData({ bookings: [...data.cachedBookings], cachedBookings: data.cachedBookings, isFetching: false });
+    }
+  },
+    [filter]);
+
+
+  useEffect(() => {
+
+    loadData(topCount)
+
+  }, [state.bookingDialogDataChanged]);
+
+
+  const handleCloseSeeDetaisDialog = () => {
     setSelectedBooking(null);
     setSeeDetailsDialogOpen(false);
-  }    
-  
-  const openDetailsDialog = (event, id) =>
-  {
+  }
+
+  const openDetailsDialog = (event, id) => {
     const booking = data.bookings.find(element => element._id === id);
     setSelectedBooking(booking);
     setSeeDetailsDialogOpen(true);
 
   }
 
-  const refreshClicked = (event) =>{
+  const refreshClicked = (event) => {
     setFilter('');
     loadData(topCount)
   }
 
-  const filterChanged = (event) =>{
+  const filterChanged = (event) => {
     setFilter(event.target.value);
   }
 
-  const handleSelectionChanged = (newSelection) =>
-  {
-    if (newSelection.length > 0){
+  const handleSelectionChanged = (newSelection) => {
+    if (newSelection.length > 0) {
       setSelectedRow(newSelection.rows[0]);
     }
-    
+
   }
 
   const [page, setPage] = React.useState(1);
 
-  const handleExcelButtonClicked = (event) =>
-  {
+  const handleExcelButtonClicked = (event) => {
     setOpenDialogExcel(true);
   }
 
-  const isTopSelectHidden = (date)=>
-  {
+  const isTopSelectHidden = (date) => {
     return date === 'live' || date === 'positive' || date === 'late' || date === 'today'
   }
 
@@ -1290,4 +1269,4 @@ export default function BookingTable(props) {
       )}
     </React.Fragment>
   );
-} 
+}
