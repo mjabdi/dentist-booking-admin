@@ -215,6 +215,8 @@ const getTableTitle = (str) => {
     return `Deleted Records`;
   } else if (str === 'late') {
     return `40 Hours Late`;
+  }else if (str === 'online') {
+    return `Online Payments (Deposit)`;
   }
 
   else {
@@ -243,6 +245,8 @@ const getTableIcon = (str) => {
     return <DeleteIcon style={{ fontSize: "2.2rem" }} />;
   } else if (str === 'late') {
     return <HourglassEmptyIcon style={{ fontSize: "2.2rem" }} />;
+  }else if (str === 'online') {
+    return <AttachMoneyIcon style={{ fontSize: "2.2rem" }} />;
   }
 
   else {
@@ -489,7 +493,116 @@ export default function BookingTable(props) {
 
     ];
 
+  } else if (props.date === 'online') {
+    columns = [
+      // { field: 'id', headerName: '#', width: 70 },
+
+      {
+        field: '_id', headerName: ' ', width: 100, renderCell: (params) => {
+          return (
+
+            <React.Fragment>
+
+              <Grid container direction="row">
+                <Grid item>
+                  <div style={{ width: "15px", paddingTop: "6px" }}>
+                    {params.getValue("deposit") > 0 && (
+                      <Tooltip title="Deposit Paid">
+                        <AttachMoneyIcon style={{ color: "#007d00", fontSize: "1.3rem", fontWeight: "500" }} />
+                      </Tooltip>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    color="primary"
+                    onClick={event => openDetailsDialog(event, params.value)}
+                  >
+                    <SearchIcon />
+                  </IconButton>
+
+                </Grid>
+              </Grid>
+
+
+            </React.Fragment>
+
+
+
+          );
+
+        }
+      },
+
+
+      {
+        field: 'timeStamp', headerName: 'TimeStamp', width: 200, valueFormatter: (params) => {
+          return formatTimeStamp(params.value);
+        }
+      },
+
+      {
+        field: 'bookingDate', headerName: 'B Date', width: 110, valueFormatter: (params) => {
+          return FormatDateFromString(params.value);
+        }
+      },
+      {
+        field: 'bookingTimeNormalized', headerName: 'B Time', width: 105, valueGetter: (params) => {
+          return params.getValue('bookingTime');
+        }
+      },
+      {
+        field: 'status', headerName: 'Status', width: 100, renderCell: (params) => {
+          if (params.value === 'booked') {
+            return (
+              <span className={classes.BookedLabel}>  BM </span>
+            );
+
+          } else if (params.value === 'patient_attended') {
+            return (
+              <span className={classes.PatientAttendedLabel}> PA </span>
+            );
+          }
+          else {
+            return 'Unknown';
+          }
+        }
+      },
+      {
+        field: 'bookingRef', headerName: 'Ref No.', width: 120, renderCell: (params) => {
+          return (
+            <Tooltip title="Go Find By Ref" placement="right">
+              <Link className={classes.RefLink}
+              //  onClick={
+              //   () => {
+              //     console.log(params.value);
+
+              //     setState(state => ({...state, currentMenuIndex: getMenuIndex(`pcr` , `findByRef`)}));
+              //     setState(state => ({...state, ref : params.value}));
+              //     setState(state => ({...state, refError : false})); 
+              //     setState(state => ({...state, foundRecords : []}));
+              //     setState(state => ({...state, findRecords : !state.findRecords}));
+              //   }
+              // }
+
+              >
+                {params.value}
+              </Link>
+            </Tooltip>
+
+          );
+        }
+      },
+      { field: 'fullname', headerName: 'Fullname', width: 250 },
+      { field: 'email', headerName: 'Email', width: 200 },
+      { field: 'phone', headerName: 'Tel', width: 150 },
+      { field: 'service', headerName: 'Service', width: 250 },
+      { field: 'notes', headerName: 'Notes', width: 500 },
+
+    ];
+
   }
+
   else {
     columns = [
       // { field: 'id', headerName: '#', width: 70 },
@@ -675,6 +788,8 @@ export default function BookingTable(props) {
     }
     else if (props.date === 'deleted') {
       api = BookService.getDeletedBookings;
+    } else if (props.date === 'online') {
+      api = BookService.getOnlineDepositBookings;
     }
 
     setData({ bookings: [], cachedBookings: [], isFetching: true });
@@ -798,7 +913,7 @@ export default function BookingTable(props) {
         justify="space-between"
         alignItems="flex-end"
       >
-        <Grid item md={4}>
+        <Grid item md={6}>
           <div style={{ textAlign: "left", paddingLeft: "10px" }}>
             <Grid
               container
@@ -839,7 +954,7 @@ export default function BookingTable(props) {
           </div>
         </Grid>
 
-        <Grid item md={3}>
+        {/* <Grid item md={3}>
           {props.date === "completed" && state.showCreateExcel && (
             <div style={{ paddingBottom: "5px" }}>
               <Button
@@ -858,7 +973,7 @@ export default function BookingTable(props) {
               </Button>
             </div>
           )}
-        </Grid>
+        </Grid> */}
 
         {data.isFetching && <div className={classes.HideNowRows}></div>}
 

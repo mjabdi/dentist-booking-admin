@@ -15,6 +15,7 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import AirplanemodeActiveIcon from "@material-ui/icons/AirplanemodeActive";
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 /// PCR ------------------
 import FindByRef from "./PCR/FindByRef";
@@ -106,6 +107,8 @@ export const MenuList_Dentist_Admin = [
     icon: <DateRangeIcon />,
   },
   { index: 8, id: `findByRef`, title: `Find By Ref No`, icon: <SearchIcon /> },
+  { index: 9, id: `onlinePayments`, title: `Online Payments`, icon: <AttachMoneyIcon /> },
+
 ];
 
 
@@ -463,6 +466,9 @@ export const getMenuContent = (role, index) => {
         return <DentistCalendarView />;
       case 8:
         return <DentistFindByRef />;
+        case 9:
+          return <DentistBookingTable date="online" />;
+  
 
       default:
         return `Page Not Found!`;

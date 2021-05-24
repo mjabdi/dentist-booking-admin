@@ -122,6 +122,12 @@ export default class BookService {
     {
        return API.get(`/api/dentist/book/getbookingbyid?id=${id}`);
     }
+  
+    static getOnlineDepositBookings = (limit) =>
+    {
+      if (!limit) limit = 25 
+      return API.get(`/api/dentist/book/getonlinedepositbookings?limit=${limit}`);
+    }
 
     static getAllBookings = (limit) =>
     {
