@@ -211,6 +211,8 @@ const Packages = [
   {packageName: 'Enlighten home teeth whitening - £395'},
   {packageName: `Enlighten home and in office teeth whitening - £495`},
   {packageName: `Invisalign consultation`},
+  {packageName: `Other Treatments`},
+
 ]
 
 function NumberFormatCustom(props) {
