@@ -6,6 +6,7 @@ import {
   Button,
   Checkbox,
   CircularProgress,
+  DialogActions,
   Divider,
   FormControlLabel,
   Grid,
@@ -312,6 +313,13 @@ export default function NewBookingDialog(props) {
     setDeposit(event.target.checked);
   };
 
+  const [depositNotRequired, setDepositNotRequired] = React.useState(false);
+
+  const depositNotRequiredChanged = (event) => {
+    setDepositNotRequired(event.target.checked);
+  };
+
+
   const fullnameChanged = (event) => {
     setFullname(event.target.value);
     setFullnameError(false);
@@ -343,6 +351,7 @@ export default function NewBookingDialog(props) {
     setService("");
     setNotes("");
     setDeposit(false);
+    setDepositNotRequired(false)
 
     props.handleClose();
     setSaving(false);
@@ -374,6 +383,7 @@ export default function NewBookingDialog(props) {
         service: service,
         notes: notes,
         deposit: deposit ? 95 : 0,
+        depositNotRequired: depositNotRequired
       });
       setSaving(false);
       setState((state) => ({
@@ -547,21 +557,39 @@ export default function NewBookingDialog(props) {
                       label={deposit ? <span className={classes.PriceLabelPaid}>£95 Deposit Paid</span> : <span className={classes.PriceLabelNotPaid}>£95 Deposit Not Paid</span>}
                     />
                   </Grid>
+
+                  <Grid otem xs={12} style={{marginTop:"0px"}}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={depositNotRequired}
+                          onChange={depositNotRequiredChanged}
+                          name="depositnotrequired"
+                        />
+                      }
+                      label={depositNotRequired ? <span className={classes.PriceLabelPaid}>Deposit Not Required (Do not send Payment Link)</span> : <span className={classes.PriceLabelNotPaid}>Deposit Not Required (Do not send Payment Link)</span>}
+                    />
+                  </Grid>
+
                 </Grid>
 
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "20px",
-                    right: "20px",
-                  }}
-                >
-                  <Grid
+                </div>
+
+
+              <Backdrop className={classes.backdrop} open={saving}>
+                <CircularProgress color="inherit" />
+              </Backdrop>
+
+            </DialogContent>
+
+            <DialogActions>
+            <Grid
                     container
                     direction="row"
                     justify="flex-end"
                     alignItems="center"
-                    spacing={1}
+                    spacing={0}
                   >
                     <Grid item>
                       <Button
@@ -584,13 +612,8 @@ export default function NewBookingDialog(props) {
                       </Button>
                     </Grid>
                   </Grid>
-                </div>
-              </div>
 
-              <Backdrop className={classes.backdrop} open={saving}>
-                <CircularProgress color="inherit" />
-              </Backdrop>
-            </DialogContent>
+            </DialogActions>
           </Dialog>
         </React.Fragment>
       )}
