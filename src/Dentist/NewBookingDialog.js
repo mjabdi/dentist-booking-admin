@@ -210,7 +210,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Packages = [
   {packageName: 'Enlighten home teeth whitening - £395'},
-  {packageName: `Enlighten home and in office teeth whitening - £495`},
+  // {packageName: `Enlighten home and in office teeth whitening - £495`},
   {packageName: `Invisalign consultation`},
   {packageName: `Other Treatments`},
 
@@ -382,7 +382,7 @@ export default function NewBookingDialog(props) {
         email: email,
         service: service,
         notes: notes,
-        deposit: deposit ? 95 : 0,
+        deposit: deposit ? 50 : 0,
         depositNotRequired: depositNotRequired
       });
       setSaving(false);
@@ -554,7 +554,7 @@ export default function NewBookingDialog(props) {
                           name="deposit"
                         />
                       }
-                      label={deposit ? <span className={classes.PriceLabelPaid}>£95 Deposit Paid</span> : <span className={classes.PriceLabelNotPaid}>£95 Deposit Not Paid</span>}
+                      label={deposit ? <span className={classes.PriceLabelPaid}>£50 Deposit Paid</span> : <span className={classes.PriceLabelNotPaid}>£50 Deposit Not Paid</span>}
                     />
                   </Grid>
 

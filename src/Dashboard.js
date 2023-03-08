@@ -515,7 +515,7 @@ export default function Dashboard() {
                     <React.Fragment>
                       <img
                         className={classes.logoImage}
-                        src={'https://www.smileworksdental.co.uk/public/design/images/logo.webp'}
+                        src={'https://www.london-teeth-whitening.co.uk/public/design/images/logo.png'}
                         alt="logo image"
                       />
                     </React.Fragment> 

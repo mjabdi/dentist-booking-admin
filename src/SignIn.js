@@ -237,7 +237,7 @@ export default function SignIn() {
               />
             </div> */}
 
-            <img src={'https://www.smileworksdental.co.uk/public/design/images/logo.webp'} alt="Dental Clinic Admin" style={{marginBottom:"20px", width:"200px", height:"70px"}}/>
+            <img src={'https://www.london-teeth-whitening.co.uk/public/design/images/logo.png'} alt="Dental Clinic Admin" style={{marginBottom:"20px", width:"200px", height:"70px"}}/>
 
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
