@@ -3,6 +3,10 @@ import axiosRetry from 'axios-retry';
 
 export default class BookService {
 
+   static sendReviewSMS = (bookingId, message) => {
+      return API.post(`/api/dentist/book/sendreviewsms`, {id: bookingId, message});
+   }
+
    static changeDepositBooking = (bookingId, deposit) => {
       return API.post(`/api/dentist/book/changedepositbooking?id=${bookingId}&deposit=${deposit}`);
    }
