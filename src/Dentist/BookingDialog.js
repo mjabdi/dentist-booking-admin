@@ -2030,7 +2030,7 @@ export default function BookingDialog(props) {
                           >
                             <Grid item>
                               <span className={classes.infoTitle} style={{color:"#2a422a"}}>
-                                Ask for Review By SMS
+                                Ask for Review By EMAIL
                               </span>
                             </Grid>
                             <Grid item>
@@ -2067,12 +2067,12 @@ export default function BookingDialog(props) {
 
                             <Button
                               variant="contained"
-                              disabled = {smsSending || !isValidPhone(booking.phone)}
+                              disabled = {smsSending || !isValidPhone(booking.email)}
                               color="primary"
                               className={classes.PayButton}
                               onClick={SendSMS}
                             >
-                              Send SMS
+                              Send EMAIL
                             </Button>
                             </Grid>
 
